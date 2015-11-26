@@ -70,13 +70,13 @@ stream.on('push', function (data) {
   if ((startsAt && hoursNow < startsAt) || (endsAt && hoursNow > endsAt)) {
     enabled = false;
   }
-  console.log('time', +new Date() - lastTime);
+
   if (gracePeriod && +new Date() - lastTime <= gracePeriod * 1000) {
     enabled = false;
   } else {
     lastTime = +new Date();
   }
-  
+
   if (fileLocation) {
     promise = promise.then(function () { return readFile(fileLocation, { encoding: 'utf-8' }) }).then(function (data) {
       enabled = !parseInt(data.replace(/(\r\n|\n|\r)/gm,'').trim());
@@ -84,11 +84,8 @@ stream.on('push', function (data) {
   }
   promise.then(function () {
     if (!enabled) {
-      console.log('Received data but was disabled');
       return;
     }
-
-    console.log('Received data');
 
     milight.sendCommands(Commands.rgbw.on(group), Commands.rgbw.brightness(20));
     milight.pause(500);
