@@ -71,13 +71,13 @@ stream.on('push', function (data) {
     enabled = false;
   }
 
-  if (gracePeriod && +new Date() - lastTime <= gracePeriod * 1000) {
+  if (enabled && gracePeriod && +new Date() - lastTime <= gracePeriod * 1000) {
     enabled = false;
   } else {
     lastTime = +new Date();
   }
 
-  if (fileLocation) {
+  if (enabled && fileLocation) {
     promise = promise.then(function () { return readFile(fileLocation, { encoding: 'utf-8' }) }).then(function (data) {
       enabled = !parseInt(data.replace(/(\r\n|\n|\r)/gm,'').trim());
     });
