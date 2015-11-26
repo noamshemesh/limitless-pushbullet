@@ -1,0 +1,25 @@
+{
+  "name": "limitless-pushbullet",
+  "version": "1.0.0",
+  "description": "Use this app to make your LimitlessLED / MiLight blink when you receive a pushbullet notification",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noamshemesh/limitless-pushbullet.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/noamshemesh/limitless-pushbullet/issues"
+  },
+  "homepage": "https://github.com/noamshemesh/limitless-pushbullet#readme",
+  "dependencies": {
+    "bluebird": "3.0.5",
+    "node-milight-promise": "0.0.3",
+    "optimist": "0.6.1",
+    "pushbullet": "1.4.3"
+  }
+}

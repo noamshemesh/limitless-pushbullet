@@ -1,0 +1,23 @@
+{
+    "asi": true,
+    "expr": true,
+    "loopfunc": true,
+    "curly": true,
+    "evil": true,
+    "white": true,
+    "undef": true,
+    "node": true,
+    "predef": [
+        "FormBot",
+        "socket",
+        "confirm",
+        "alert",
+        "require",
+        "__dirname",
+        "process",
+        "exports",
+        "console",
+        "Buffer",
+        "module"
+    ]
+}
