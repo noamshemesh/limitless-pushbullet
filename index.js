@@ -38,7 +38,7 @@ var milight = new Milight({
 var pushbullet = new Pushbullet(apiKey);
 var stream = pushbullet.stream();
 var isOpen = false;
-var lastTime = +new Date() / 1000 - gracePeriod - 1;
+var lastTime = +new Date() - gracePeriod * 1000 - 1;
 
 stream.connect();
 
@@ -70,11 +70,13 @@ stream.on('push', function (data) {
   if ((startsAt && hoursNow < startsAt) || (endsAt && hoursNow > endsAt)) {
     enabled = false;
   }
-
-  if (gracePeriod && +new Date() - lastTime <= gracePeriod) {
+  console.log('time', +new Date() - lastTime);
+  if (gracePeriod && +new Date() - lastTime <= gracePeriod * 1000) {
     enabled = false;
+  } else {
+    lastTime = +new Date();
   }
-
+  
   if (fileLocation) {
     promise = promise.then(function () { return readFile(fileLocation, { encoding: 'utf-8' }) }).then(function (data) {
       enabled = !parseInt(data.replace(/(\r\n|\n|\r)/gm,'').trim());
