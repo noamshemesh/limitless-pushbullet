@@ -13,6 +13,7 @@ var argv = require('optimist')
     .alias('e', 'end-hour')
     .alias('f', 'state-file')
     .alias('r', 'grace-period')
+    .alias('c', 'color')
     .describe('p', 'Pushbullet API key')
     .describe('m', 'Milight IP address')
     .describe('g', 'Milight group')
@@ -20,6 +21,7 @@ var argv = require('optimist')
     .describe('e', 'Enabled only before this hour')
     .describe('f', 'State file location (0 - enabled, 1 - disabled) see https://github.com/noamshemesh/motion-starter')
     .describe('r', 'How many seconds to wait after one blink')
+    .describe('c', 'Color (0-256) 0 is purple, 27 is red, 186 is blue. Counter-clockwise of the color pallete on your remote')
     .argv;
 
 var apiKey = argv.p;
@@ -87,8 +89,26 @@ stream.on('push', function (data) {
       return;
     }
 
+    var color = argv.c; // white
+    if (color && data.application_name) {
+      var lcAppName = data.application_name.toLowerCase();
+      if (lcAppName.indexOf('inbox') >= 0) {
+        color -= 30;
+        color += color < 0 ? 256 : 0;
+      } else if (lcAppName.indexOf('whatsapp') >= 0) {
+        color = (color + 30) % 255;
+      }
+    }
+
     milight.sendCommands(Commands.rgbw.on(group), Commands.rgbw.brightness(20));
-    milight.pause(500);
-    milight.sendCommands(Commands.rgbw.on(group), Commands.rgbw.brightness(100));
+    color && milight.pause(500);
+    color && milight.sendCommands(Commands.rgbw.hue(color));
+    color && milight.sendCommands(Commands.rgbw.brightness(10));
+    color && milight.sendCommands(Commands.rgbw.brightness(100));
+    milight.pause(250);
+    color && milight.sendCommands(Commands.rgbw.brightness(10));
+    color && milight.pause(500);
+    color && milight.sendCommands(Commands.rgbw.whiteMode(group));
+    milight.sendCommands(Commands.rgbw.brightness(100));
   });
 });
