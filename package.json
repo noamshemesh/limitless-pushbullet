@@ -1,6 +1,6 @@
 {
   "name": "limitless-pushbullet",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Use this app to make your LimitlessLED / MiLight blink when you receive a pushbullet notification",
   "main": "index.js",
   "scripts": {
