@@ -18,7 +18,7 @@
   "homepage": "https://github.com/noamshemesh/limitless-pushbullet#readme",
   "dependencies": {
     "bluebird": "3.0.5",
-    "node-milight-promise": "0.0.3",
+    "node-milight-promise": "0.0.5",
     "optimist": "0.6.1",
     "pushbullet": "1.4.3"
   }
